@@ -324,11 +324,10 @@ export default function Home() {
                 />
                 {modelPreview ? (
                   <div className="relative w-full aspect-square rounded-lg overflow-hidden">
-                    <Image
+                    <img
                       src={modelPreview}
                       alt="模特预览"
-                      fill
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ) : (
@@ -373,11 +372,10 @@ export default function Home() {
                 />
                 {garmentPreview ? (
                   <div className="relative w-full aspect-square rounded-lg overflow-hidden">
-                    <Image
+                    <img
                       src={garmentPreview}
                       alt="服装预览"
-                      fill
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ) : (
