@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Cloudflare Pages 需要边缘运行时
+export const runtime = 'edge';
+
 const DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/api/v1";
 
 // 创建试衣任务
