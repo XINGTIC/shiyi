@@ -160,7 +160,10 @@ export default function Home() {
         clearInterval(pollingIntervalRef.current);
         pollingIntervalRef.current = null;
       }
-      alert(error instanceof Error ? error.message : "查询任务状态失败");
+      
+      const errorMessage = error instanceof Error ? error.message : "查询任务状态失败";
+      setProgress(`❌ 错误: ${errorMessage}`);
+      alert(`查询任务状态失败\n\n错误信息: ${errorMessage}\n\n请稍后重试或联系技术支持`);
     }
   };
 
