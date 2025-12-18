@@ -146,7 +146,9 @@ export default function Home() {
           pollingIntervalRef.current = null;
         }
       } else if (status === "FAILED") {
-        throw new Error(data.task?.message || "任务执行失败");
+        const failureMessage = data.task?.message || data.message || "任务执行失败";
+        const failureCode = data.task?.code || data.code || "";
+        throw new Error(`任务执行失败: ${failureMessage}${failureCode ? ` (错误码: ${failureCode})` : ""}`);
       } else {
         // 任务还在处理中，继续轮询
         setProgress(`处理中... (${status})`);
@@ -233,7 +235,21 @@ export default function Home() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "创建任务失败");
+        // 提取详细的错误信息
+        const errorMessage = data.error || data.message || data.originalError || "创建任务失败";
+        const errorCode = data.code || "";
+        const errorDetails = data.details ? JSON.stringify(data.details) : "";
+        
+        // 构建详细的错误消息
+        let fullErrorMessage = errorMessage;
+        if (errorCode) {
+          fullErrorMessage += ` (错误码: ${errorCode})`;
+        }
+        if (errorDetails) {
+          fullErrorMessage += `\n详细信息: ${errorDetails}`;
+        }
+        
+        throw new Error(fullErrorMessage);
       }
 
       // 获取任务 ID
@@ -260,7 +276,13 @@ export default function Home() {
         clearInterval(pollingIntervalRef.current);
         pollingIntervalRef.current = null;
       }
-      alert(error instanceof Error ? error.message : "生成失败，请重试");
+      
+      // 显示详细的错误信息
+      const errorMessage = error instanceof Error ? error.message : "生成失败，请重试";
+      setProgress(`❌ 错误: ${errorMessage}`);
+      
+      // 使用 alert 显示详细错误（可以后续改为更友好的 UI 组件）
+      alert(`生成失败\n\n错误信息: ${errorMessage}\n\n请检查:\n1. 图片是否上传成功\n2. 网络连接是否正常\n3. API Key 是否正确配置`);
       setProgress("");
     }
   };
