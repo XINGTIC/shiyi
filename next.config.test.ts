@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+// 测试配置：静态导出（仅用于测试前端是否能正常显示）
+// 注意：这会禁用 API Routes
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -8,11 +10,12 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
-    unoptimized: true, // Cloudflare Pages 需要此配置
+    unoptimized: true,
   },
-  // Cloudflare Pages 兼容性配置
   trailingSlash: false,
-  // 移除 output 配置，让 Next.js 使用默认输出格式
+  // 临时测试：静态导出
+  output: 'export',
 };
 
 export default nextConfig;
+
