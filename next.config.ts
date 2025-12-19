@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true, // Cloudflare Pages 需要此配置
   },
+  // Cloudflare Pages 兼容性配置
+  trailingSlash: false,
 };
 
 export default nextConfig;
